@@ -12,7 +12,7 @@ from PIL import Image
 
 def main():
     json_handler = JsonHandler()
-    # download_cover_db()
+    download_cover_db()
     download_db()
     list_of_ids = read_xml()
     for (game_id, name) in list_of_ids:
@@ -113,9 +113,9 @@ def check_for_extra_images(url, name):
         file = open(name, "wb")
         file.write(r.content)
         file.close()
-    img = Image.open(name)
-    img = img.resize((256, 256), Image.ANTIALIAS)
-    img.save(name)
+        img = Image.open(name)
+        img = img.resize((256, 256), Image.ANTIALIAS)
+        img.save(name)
 
 
 if __name__ == '__main__':
