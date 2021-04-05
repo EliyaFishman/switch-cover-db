@@ -20,9 +20,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2.3.2
 
-      - name: Modifiy the specific files using scripts
-        run: |
-          --- shell scripts or command lines to execute ---
 # If you execute some shell scripts or command lines to modify
 # the files, use the 'run' key.
 # More details, see "https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsrun"
