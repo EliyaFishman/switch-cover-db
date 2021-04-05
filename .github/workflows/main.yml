@@ -31,7 +31,8 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2.2.1
           # The target architecture (x86, x64) of the Python interpreter.
-          
+      - name: Run script
+        run: python main.py
           # Used to pull python distributions from actions/python-versions. Since there's a default, this is typically not supplied by the user.
       - name: Get current date
         id: date
