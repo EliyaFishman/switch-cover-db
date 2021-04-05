@@ -39,11 +39,11 @@ def main():
                                        string_to_ascii(name)) + "-cover2-[" + real_id + "].jpg")
             result = check_for_extra_images("https://art.gametdb.com/switch/coverMB/US/" + game_id + ".jpg",
                                             directory + replace_space_with_dashes(
-                                                string_to_ascii(name)) + "-cover3-[" + real_id + "].jpg")
+                                                string_to_ascii(name)) + "-cover-b-[" + real_id + "].jpg")
             if result:
                 check_for_extra_images("https://art.gametdb.com/switch/coverMB2/US/" + game_id + ".jpg",
                                        directory + replace_space_with_dashes(
-                                           string_to_ascii(name)) + "-cover4-[" + real_id + "].jpg")
+                                           string_to_ascii(name)) + "-cover-b2-[" + real_id + "].jpg")
 
 
 class JsonHandler:
