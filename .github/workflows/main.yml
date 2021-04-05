@@ -30,9 +30,6 @@ jobs:
 # More details, see "https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsuses"
       - name: Setup Python
         uses: actions/setup-python@v2.2.1
-        with:
-          # Version range or exact version of a Python version to use, using SemVer's version range syntax.
-          python-version: 3.7.4
           # The target architecture (x86, x64) of the Python interpreter.
           
           # Used to pull python distributions from actions/python-versions. Since there's a default, this is typically not supplied by the user.
