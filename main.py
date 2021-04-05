@@ -17,33 +17,35 @@ def main():
     list_of_ids = read_xml()
     for (game_id, name) in list_of_ids:
         if os.path.exists("switch/coverM/US/" + game_id + ".jpg"):
-            real_id = json_handler.find_in_dict(name)
+            title_id = json_handler.find_in_dict(name)
             print("game id " + game_id)
             print("name " + name)
-            if real_id is None:
+            if title_id is None:
                 print("Couldn't find a title id for " + name)
                 continue
-            print("real id " + real_id)
+            print("title id " + title_id)
             if name[0] in string.digits:
                 directory = "Vertical/0-9/"
             else:
                 directory = "Vertical/" + name[0].upper() + "/"
             Path(directory).mkdir(parents=True, exist_ok=True)
-            image_name = directory + replace_space_with_dashes(string_to_ascii(name)) + "-cover1-[" + real_id + "].jpg"
+            image_name = directory + replace_space_with_dashes(string_to_ascii(name)) + "-cover1-[" + title_id + "].jpg"
             # resize the image to the right dimensions
             img = Image.open("switch/coverM/US/" + game_id + ".jpg")
             img = img.resize((256, 256), Image.ANTIALIAS)
             img.save(image_name)
+            Path("grouped").mkdir(parents=True, exist_ok=True)
+            img.save("grouped/"+title_id+".jpg")
             check_for_extra_images("https://art.gametdb.com/switch/coverM2/US/" + game_id + ".jpg",
                                    directory + replace_space_with_dashes(
-                                       string_to_ascii(name)) + "-cover2-[" + real_id + "].jpg")
+                                       string_to_ascii(name)) + "-cover2-[" + title_id + "].jpg")
             result = check_for_extra_images("https://art.gametdb.com/switch/coverMB/US/" + game_id + ".jpg",
                                             directory + replace_space_with_dashes(
-                                                string_to_ascii(name)) + "-cover-b-[" + real_id + "].jpg")
+                                                string_to_ascii(name)) + "-cover-b-[" + title_id + "].jpg")
             if result:
                 check_for_extra_images("https://art.gametdb.com/switch/coverMB2/US/" + game_id + ".jpg",
                                        directory + replace_space_with_dashes(
-                                           string_to_ascii(name)) + "-cover-b2-[" + real_id + "].jpg")
+                                           string_to_ascii(name)) + "-cover-b2-[" + title_id + "].jpg")
 
 
 class JsonHandler:
