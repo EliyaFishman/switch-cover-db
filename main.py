@@ -71,7 +71,7 @@ def replace_space_with_dashes(s):
 
 
 def compare_names(name1, name2):
-    return all(word in string_to_ascii(name2) for word in string_to_ascii(name1))
+    return all(word in string_to_ascii(name2).split() for word in string_to_ascii(name1).split())
 
 
 def download_cover_db():
