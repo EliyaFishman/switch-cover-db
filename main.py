@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import string
 import xml.etree.ElementTree as ET
 import zipfile
@@ -11,6 +12,7 @@ from PIL import Image
 
 
 def main():
+    list_of_missing_games = list()
     json_handler = JsonHandler()
     download_cover_db()
     download_db()
@@ -22,6 +24,7 @@ def main():
             print("name " + name)
             if title_id is None:
                 print("Couldn't find a title id for " + name)
+                list_of_missing_games.append(name)
                 continue
             print("title id " + title_id)
             if name[0] in string.digits:
@@ -46,6 +49,9 @@ def main():
                 check_for_extra_images("https://art.gametdb.com/switch/coverMB2/US/" + game_id + ".jpg",
                                        directory + replace_space_with_dashes(
                                            string_to_ascii(name)) + "-cover-b2-[" + title_id + "].jpg")
+    with open('missing_games.txt', 'w') as file:
+        for item in list_of_missing_games:
+            file.write('%s\n' % item)
 
 
 class JsonHandler:
@@ -62,8 +68,7 @@ class JsonHandler:
 
 
 def string_to_ascii(s):
-    printable = set(string.digits + string.ascii_letters + string.whitespace)
-    return ''.join(filter(lambda x: x in printable, s)).lower()
+    return re.sub('[^0-9a-zA-Z]+', ' ', s).lower()
 
 
 def replace_space_with_dashes(s):
@@ -124,7 +129,4 @@ def check_for_extra_images(url, name):
 
 
 if __name__ == '__main__':
-    # print(compare_names("LEGO City Undercover", "LEGO CITY Undercover"))
-    # download_cover_db()
-    # read_xml()
     main()
