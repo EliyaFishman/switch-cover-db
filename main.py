@@ -80,7 +80,7 @@ def compare_names(name1, name2):
 
 
 def download_cover_db():
-    url = "https://www.gametdb.com/download.php?FTP=GameTDB-switch_coverM-US-2021-03-31.zip"
+    url = "https://www.gametdb.com/download.php?FTP=GameTDB-switch_coverM-US-2021-04-07.zip"
     response = urlopen(url)
     file = open("database.zip", "wb")
     file.write(response.read())
