@@ -14,11 +14,11 @@ from PIL import Image
 def main():
     list_of_missing_games = list()
     json_handler = JsonHandler()
-    download_cover_db()
     download_db()
     list_of_ids = read_xml()
     for (game_id, name) in list_of_ids:
-        if os.path.exists("switch/coverM/US/" + game_id + ".jpg"):
+        r = requests.get("https://art.gametdb.com/switch/coverM/US/" + game_id + ".jpg", allow_redirects=True)
+        if r.status_code == 200:
             title_id = json_handler.find_in_dict(name)
             print("game id " + game_id)
             print("name " + name)
@@ -34,7 +34,10 @@ def main():
             Path(directory).mkdir(parents=True, exist_ok=True)
             image_name = directory + replace_space_with_dashes(string_to_ascii(name)) + "-cover1-[" + title_id + "].jpg"
             # resize the image to the right dimensions
-            img = Image.open("switch/coverM/US/" + game_id + ".jpg")
+            file = open(image_name, "wb")
+            file.write(r.content)
+            file.close()
+            img = Image.open(image_name)
             img = img.resize((256, 256), Image.ANTIALIAS)
             img.save(image_name)
             Path("grouped").mkdir(parents=True, exist_ok=True)
@@ -77,16 +80,6 @@ def replace_space_with_dashes(s):
 
 def compare_names(name1, name2):
     return all(word in string_to_ascii(name2).split() for word in string_to_ascii(name1).split())
-
-
-def download_cover_db():
-    url = "https://www.gametdb.com/download.php?FTP=GameTDB-switch_coverM-US-2021-04-07.zip"
-    response = urlopen(url)
-    file = open("database.zip", "wb")
-    file.write(response.read())
-    file.close()
-    with zipfile.ZipFile("database.zip", 'r') as zip_ref:
-        zip_ref.extractall(".")
 
 
 def download_db():
